@@ -33,7 +33,7 @@ describe "Sequel::Plugins::ValidationHelpersBlock" do
       end
     end
     @m.should_not be_valid
-    @m.errors.should == {:name=>["is not present", "is longer than 10 characters"], :date=>["is invalid"], :number=>["is not present", "is not a number"]}
+    @m.errors.should == {:name=>["is not present", "is not present"], :date=>["is invalid"], :number=>["is not present", "is not a number"]}
     @m.set(:name=>'1234567890-', :number=>'a', :date=>'Tuesday')
     @m.should_not be_valid
     @m.errors.should == {:name=>["is longer than 10 characters"], :date=>["is invalid"], :number=>["is not a number"]}
@@ -99,7 +99,7 @@ describe "Sequel::Plugins::ValidationHelpersBlock" do
     })
     @c.dataset = ds
     @m.should_not be_valid
-    @m.errors.should == {:name=>["is longer than 12 characters", "is not 10 characters", "is shorter than 8 characters", "is too short or too long", "is already taken"], :date=>["is invalid", "is not in range or set: [\"10/11/2009\"]"], :number=>["is not present", "is not a number", "is not a number"]}
+    @m.errors.should == {:name=>["is not present", "is not 10 characters", "is shorter than 8 characters", "is too short or too long", "is already taken"], :date=>["is invalid", "is not in range or set: [\"10/11/2009\"]"], :number=>["is not present", "is not a number", "is not a number"]}
     @m.set(:name=>'123456789', :date=>'10/12/2009', :number=>'12')
     @m.should_not be_valid
     @m.errors.should == {:name=>["is not 10 characters", "is already taken"], :date=>["is not in range or set: [\"10/11/2009\"]"], :number=>["is a string"]}
