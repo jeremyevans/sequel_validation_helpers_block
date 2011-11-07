@@ -1,16 +1,20 @@
 require "rake"
 require "rake/clean"
 require "spec/rake/spectask"
-begin
-  require "hanna/rdoctask"
-rescue LoadError
-  require "rake/rdoctask"
-end
 
 CLEAN.include ["*.gem", "rdoc"]
 RDOC_OPTS = ['--inline-source', '--line-numbers', '--title', 'Sequel validation_helpers_block: Allows easy determination of which validation rules apply to a given column, at the expense of increased verbosity', '--main', 'Sequel::Plugins::ValidationHelpersBlock']
 
-Rake::RDocTask.new do |rdoc|
+rdoc_task_class = begin
+  require "rdoc/task"
+  RDOC_OPTS.concat(['-f', 'hanna'])
+  RDoc::Task
+rescue LoadError
+  require "rake/rdoctask"
+  Rake::RDocTask
+end
+
+rdoc_task_class.new do |rdoc|
   rdoc.rdoc_dir = "rdoc"
   rdoc.options += RDOC_OPTS
   rdoc.rdoc_files.add %w"lib/sequel_validation_helpers_block.rb LICENSE"
