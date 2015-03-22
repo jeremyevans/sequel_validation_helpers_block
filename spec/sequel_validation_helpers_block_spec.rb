@@ -3,6 +3,17 @@ require 'sequel'
 $: << File.join(File.dirname(__FILE__), '..', 'lib')
 Sequel.extension :blank
 
+if defined?(RSpec)
+  require 'rspec/version'
+  if RSpec::Version::STRING >= '2.11.0'
+    RSpec.configure do |config|
+      config.expect_with :rspec do |c|
+        c.syntax = :should
+      end
+    end
+  end
+end
+
 describe "Sequel::Plugins::ValidationHelpersBlock" do
   before do
     @db = Sequel::Database.new
