@@ -55,10 +55,10 @@ module Sequel
       # run for the related attribute on the related object.
       class ValidationHelpersValidationsBlock < BasicObject
         # validation_helpers methods that do not require a leading argument.
-        VALIDATION_HELPERS_NO_ARG_METHODS = [:integer, :not_string, :numeric, :presence, :unique].freeze
+        VALIDATION_HELPERS_NO_ARG_METHODS = [:integer, :schema_types, :numeric, :presence, :unique].freeze
         
         # validation_helpers methods that require a leading argument
-        VALIDATION_HELPERS_1_ARG_METHODS = [:exact_length, :format, :includes, :length_range, :max_length, :min_length].freeze
+        VALIDATION_HELPERS_1_ARG_METHODS = [:exact_length, :format, :includes, :length_range, :max_length, :min_length, :type].freeze
         
         # Store the object and attribute and instance_eval the block.
         def initialize(obj, attr, &block)

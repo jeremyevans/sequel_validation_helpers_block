@@ -74,6 +74,8 @@ describe "Sequel::Plugins::ValidationHelpersBlock" do
           exact_length 10
           min_length 8
           length_range 9..11
+          type String
+          schema_types
         end
         date do
           format %r{\d\d/\d\d/\d\d\d\d}
@@ -83,7 +85,6 @@ describe "Sequel::Plugins::ValidationHelpersBlock" do
           presence
           integer
           numeric
-          not_string
         end
       end
     end
@@ -98,11 +99,13 @@ describe "Sequel::Plugins::ValidationHelpersBlock" do
       end
     })
     @c.dataset = ds
+    @c.db_schema[:name] = {:type => :string}
+    @m.name = ''
     @m.should_not be_valid
-    @m.errors.should == {:name=>["is not present", "is not 10 characters", "is shorter than 8 characters", "is too short or too long"], :date=>["is invalid", "is not in range or set: [\"10/11/2009\"]"], :number=>["is not present", "is not a number", "is not a number"]}
+    @m.errors.should == {:name=>["is already taken", "is not 10 characters", "is shorter than 8 characters", "is too short or too long"], :date=>["is invalid", "is not in range or set: [\"10/11/2009\"]"], :number=>["is not present", "is not a number", "is not a number"]}
     @m.set(:name=>'123456789', :date=>'10/12/2009', :number=>'12')
     @m.should_not be_valid
-    @m.errors.should == {:name=>["is already taken", "is not 10 characters"], :date=>["is not in range or set: [\"10/11/2009\"]"], :number=>["is a string"]}
+    @m.errors.should == {:name=>["is already taken", "is not 10 characters"], :date=>["is not in range or set: [\"10/11/2009\"]"]}
     @m.set(:name=>'1234567890', :date=>'10/11/2009', :number=>12)
     @m.should be_valid
     @m.errors.should == {}
