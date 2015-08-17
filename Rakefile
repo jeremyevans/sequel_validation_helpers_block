@@ -1,6 +1,5 @@
 require "rake"
 require "rake/clean"
-require "spec/rake/spectask"
 
 CLEAN.include ["*.gem", "rdoc"]
 RDOC_OPTS = ['--inline-source', '--line-numbers', '--title', 'Sequel validation_helpers_block: Allows easy determination of which validation rules apply to a given column, at the expense of increased verbosity', '--main', 'Sequel::Plugins::ValidationHelpersBlock']
