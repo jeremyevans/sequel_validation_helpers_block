@@ -6,7 +6,7 @@ require 'minitest/autorun'
 
 describe "Sequel::Plugins::ValidationHelpersBlock" do
   before do
-    @db = Sequel::Database.new
+    @db = Sequel.mock
     @c = Class.new(Sequel::Model(@db)) do
       def self.set_validations(&block)
         define_method(:validate, &block)
@@ -91,7 +91,7 @@ describe "Sequel::Plugins::ValidationHelpersBlock" do
     end
     ds = @db.dataset
     ds.extend(Module.new {
-      def columns(sql)
+      def columns
         [:name, :date, :number]
       end
       
