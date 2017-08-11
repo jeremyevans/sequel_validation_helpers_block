@@ -1,7 +1,5 @@
-require 'rubygems'
 require 'sequel'
-$: << File.join(File.dirname(__FILE__), '..', 'lib')
-Sequel.extension :blank
+$:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'minitest/autorun'
 
 describe "Sequel::Plugins::ValidationHelpersBlock" do

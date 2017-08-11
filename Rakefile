@@ -1,27 +1,18 @@
 require "rake"
 require "rake/clean"
+require "rdoc/task"
 
 CLEAN.include ["*.gem", "rdoc"]
-RDOC_OPTS = ['--inline-source', '--line-numbers', '--title', 'Sequel validation_helpers_block: Allows easy determination of which validation rules apply to a given column, at the expense of increased verbosity', '--main', 'Sequel::Plugins::ValidationHelpersBlock']
 
-rdoc_task_class = begin
-  require "rdoc/task"
-  RDOC_OPTS.concat(['-f', 'hanna'])
-  RDoc::Task
-rescue LoadError
-  require "rake/rdoctask"
-  Rake::RDocTask
-end
-
-rdoc_task_class.new do |rdoc|
+RDoc::Task.new do |rdoc|
   rdoc.rdoc_dir = "rdoc"
-  rdoc.options += RDOC_OPTS
-  rdoc.rdoc_files.add %w"lib/sequel_validation_helpers_block.rb LICENSE"
+  rdoc.options = ['--inline-source', '--line-numbers', '--title', 'Sequel validation_helpers_block: Allows easy determination of which validation rules apply to a given column, at the expense of increased verbosity', '--main', 'Sequel::Plugins::ValidationHelpersBlock', '-f', 'hanna']
+  rdoc.rdoc_files.add %w"lib/sequel/plugins/validation_helpers_block.rb LICENSE"
 end
 
 desc "Run specs"
 task :spec do
-  sh %{#{FileUtils::RUBY} -rubygems spec/sequel_validation_helpers_block_spec.rb}
+  sh %{#{FileUtils::RUBY} spec/sequel_validation_helpers_block_spec.rb}
 end
 task :default => [:spec]
 
