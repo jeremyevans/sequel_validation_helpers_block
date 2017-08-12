@@ -87,8 +87,7 @@ describe "Sequel::Plugins::ValidationHelpersBlock" do
         end
       end
     end
-    ds = @db.dataset
-    ds.extend(Module.new {
+    ds = @db.dataset.with_extend do
       def columns
         [:name, :date, :number]
       end
@@ -96,7 +95,7 @@ describe "Sequel::Plugins::ValidationHelpersBlock" do
       def fetch_rows(sql)
         yield({:v => /COUNT.*"?name"? = '1234567890'/i.match(sql) ? 0 : 1})
       end
-    })
+    end
     @c.dataset = ds
     @c.db_schema[:name] = {:type => :string}
     @m.name = ''
