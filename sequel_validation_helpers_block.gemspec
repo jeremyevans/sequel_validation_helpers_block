@@ -11,4 +11,5 @@ spec = Gem::Specification.new do |s|
   s.homepage = "https://github.com/jeremyevans/sequel_validation_helpers_block"
   s.rdoc_options = ['--inline-source', '--line-numbers', '--title', 'Sequel validation_helpers_block: Allows easy determination of which validation rules apply to a given column, at the expense of increased verbosity', '--main', 'Sequel::Plugins::ValidationHelpersBlock', 'lib/sequel/plugins/validation_helpers_block.rb', 'LICENSE']
   s.add_dependency "sequel", '>=2.12.0'
+  s.add_development_dependency "minitest-global_expectations"
 end
