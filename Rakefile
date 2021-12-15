@@ -12,7 +12,7 @@ end
 
 desc "Run specs"
 task :spec do
-  sh %{#{FileUtils::RUBY} spec/sequel_validation_helpers_block_spec.rb}
+  sh %{#{FileUtils::RUBY} #{"-w" if RUBY_VERSION >= '3'} spec/sequel_validation_helpers_block_spec.rb}
 end
 task :default => [:spec]
 
